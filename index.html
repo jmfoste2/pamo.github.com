@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Canvas Resize</title>
+<style type="text/css">
+body{
+	background: #222;
+	font-family: "Tahoma";
+	size: 10px;
+	color: #fff;
+	}
+</style>
+<script src="js/WordyClouds.js"></script>
+<script type="text/javascript">
+
+window.addEventListener('load', eventWindowLoaded, false);	
+function eventWindowLoaded() {
+
+	canvasApp();
+}
+//consoleLog 
+//*** consoleLog util class
+//create constructor
+
+
+function eventWindowLoaded() {
+	
+	canvasApp();
+}
+
+
+function canvasApp() {
+		
+	var message = "Tag Cloud";
+	var fontSize = "20";
+	var font = "Tahoma";
+	
+	
+	var theCanvas = document.getElementById('display');
+	if (!theCanvas || !theCanvas.getContext) {
+  		 return;
+	}
+	var context = theCanvas.getContext('2d'); 
+	
+
+		
+	var formElement = document.getElementById("textBox");
+	formElement.addEventListener('change', textBoxChanged, false);	
+	
+	formElement = document.getElementById("textSize");
+	formElement.addEventListener('change', textSizeChanged, false);	
+	
+	formElement = document.getElementById("canvasWidth")
+	formElement.addEventListener('change', canvasWidthChanged, false);	
+	
+	formElement = document.getElementById("canvasHeight")
+	formElement.addEventListener('change', canvasHeightChanged, false);
+	
+	theCanvas.addEventListener("mousedown", changeColor, false );
+	
+	drawScreen();
+	
+	function drawScreen() {
+		
+		context.fillStyle = '#222';
+		context.fillRect(0, 0, theCanvas.width, theCanvas.height);
+		
+		
+		
+		context.font =  fontSize + "px " + font 
+		
+		var metrics = context.measureText(message)
+		var textWidth = metrics.width;
+		var xPosition = (theCanvas.width/2 - textWidth/2);
+		var yPosition = (theCanvas.height/2);
+		var tempColor = "#ff3322";
+		context.fillStyle    = tempColor;
+		<!--context.fillText  ( message,  xPosition ,yPosition);-->
+		WordyClouds.runBookmarklet();
+		
+	}
+	
+	function textBoxChanged(e) {
+		var target =  e.target;
+		message = target.value;
+		drawScreen();
+	}
+	
+	function textSizeChanged(e) {
+		var target =  e.target;
+		fontSize = target.value;
+		drawScreen();
+	}
+	
+	function canvasWidthChanged(e) {
+		var target =  e.target;
+		theCanvas.width =  target.value;
+		drawScreen();
+	}
+	
+	function canvasHeightChanged(e) {
+		var target =  e.target;
+		theCanvas.height =  target.value;
+		drawScreen();
+	}
+	
+	function changeColor(e) {
+		WordyClouds.processClick(e.pageX, e.pageY);
+		
+	}
+	
+	
+		
+}
+
+
+
+</script> 
+</head>
+<body background="#333333">
+
+<div style="position: absolute; top: 50px; left: 50px;">
+<canvas id="display" width="500" height="300">
+ Your browser does not support the HTML 5 Canvas. 
+</canvas>
+<br>
+<form>
+  Text:   <input type="button" value="Refresh Cloud" onClick="WordyClouds.runBookmarklet()">
+  <br><textarea id="textBox" placeholder="enter text" rows="5" cols="80">
+
+My money's in that office, right? If she start giving me some bullshit about it ain't there, and we got to go someplace else and get it, I'm gonna shoot you in the head then and there. Then I'm gonna shoot that bitch in the kneecaps, find out where my goddamn money is. She gonna tell me too. Hey, look at me when I'm talking to you, motherfucker. You listen: we go in there, and that nigga Winston or anybody else is in there, you the first motherfucker to get shot. You understand?
+
+You think water moves fast? You should see ice. It moves like it has a mind. Like it knows it killed the world once and got a taste for murder. After the avalanche, it took us a week to climb out. Now, I don't know exactly when we turned on each other, but I know that seven of us survived the slide... and only five made it out. Now we took an oath, that I'm breaking now. We said we'd say it was the snow that killed the other two, but it wasn't. Nature is lethal but it doesn't hold a candle to man.
+
+Do you see any Teletubbies in here? Do you see a slender plastic tag clipped to my shirt with my name printed on it? Do you see a little Asian child with a blank expression on his face sitting outside on a mechanical helicopter that shakes when you put quarters in it? No? Well, that's what you see at a toy store. And you must think you're in a toy store, because you're here shopping for an infant named Jeb.</textarea> 
+
+  <br>
+  Text Size: <input type="range" id="textSize"
+       min="0"
+       max="200"
+       step="1"
+       value="50"/> 
+  <br>
+  
+ Canvas Width:  <input type="range" id="canvasWidth"
+       min="0"
+       max="1000"
+       step="1"
+       value="500"/>
+ <br>      
+  
+  Canvas Height:
+  <input type="range" id="canvasHeight"
+       min="0"
+       max="1000"
+       step="1"
+       value="300"/>
+
+</div>
+
+
+</body>
+</html>
+
+
+
+
