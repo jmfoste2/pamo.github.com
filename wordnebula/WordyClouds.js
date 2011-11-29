@@ -287,7 +287,7 @@ WordyClouds.loadFromDelicious = function(username){
 }
 
 WordyClouds.loadFromTwitter = function(){
-	var username = document.getElementById('twitter_username').value;
+	var username = document.getElementById('twitter_user').value;
 	var count = document.getElementById('tweets').value;
 	JSONP.get('https://api.twitter.com/1/statuses/user_timeline.json?include_entities=false&include_rts=false&screen_name=' + username + '&count='+ count + '&trim_user=true&exclude_replies=true', function(data){
 		var text = '';
