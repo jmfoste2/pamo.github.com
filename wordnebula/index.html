@@ -57,8 +57,6 @@ function canvasApp() {
 	
 	var context = theCanvas.getContext('2d'); 
 	
-
-		
 	var formElement = document.getElementById("textBox");
 	formElement.addEventListener('change', textBoxChanged, false);	
 	
@@ -67,6 +65,16 @@ function canvasApp() {
 	
 	formElement = document.getElementById("canvasHeight")
 	formElement.addEventListener('change', canvasHeightChanged, false);
+	
+	formElement = document.getElementById("rss")
+	formElement.addEventListener('change', rssChanged, false);
+	
+	formElement = document.getElementById("twitter_user")
+	formElement.addEventListener('change', twitterUserChanged, false);	
+	
+	formElement = document.getElementById("twitter_query")
+	formElement.addEventListener('change', twitterQueryChanged, false);	
+	
 	
 	theCanvas.addEventListener("mousedown", changeColor, false );
 	
@@ -128,6 +136,7 @@ function canvasApp() {
 <a href="#" onClick="changeColorScheme('#FFF')">Change Background to White</a>
 <br>
 <form>
+
 URL Feed: <input type="text" placeholder="enter url" id="rss" name="rss" value="http://leangains.com/"><br>
 Number of Posts: <input type="text" id="rsscount" name="rsscount" value="10"><input type="button" value="Scrape Feed" onClick="WordyClouds.loadFromFeed()"><br><br>
 Public Twitter Feed: <input type="text" placeholder="enter username" id="twitter_user" name="twitter_user" value="twitterapi"><br> 
