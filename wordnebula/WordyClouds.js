@@ -292,6 +292,7 @@ WordyClouds.loadTweets = function(){
 	JSONP.get('https://api.twitter.com/1/statuses/user_timeline.json?include_entities=false&include_rts=false&screen_name=' + user + '&count='+ count + '&trim_user=true&exclude_replies=true', function(data){
 		var text = '';
 		data.forEach(function(entry){
+			console.log(text);
 			text+=entry.text + '\n';
 		})	
 		WordyClouds.loadFromWordFreq(text);
