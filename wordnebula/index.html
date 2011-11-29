@@ -107,7 +107,7 @@ function canvasApp() {
 	var lastTarget = document.getElementById("textBox");
 	
 	function reDrawCanvas(e){
-		var target =  e.target.getClass();
+		var target =  e.target.className;
 		TagCloud.runBookmarklet(target);
 		lastTarget = e;
 	}
