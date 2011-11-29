@@ -35,7 +35,7 @@ CommonWords.english = "a about after again against all an another any and are as
  under until up\
  very\
  was wasn't we were we're what when where which while who why will with would wouldn't\
- you your".split(' ')
+ you your rt".split(' ')
 
 var ColorPalates = {}
 ColorPalates.autumn = 
