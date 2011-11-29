@@ -107,7 +107,7 @@ function canvasApp() {
 	var lastTarget = document.getElementById("textBox");
 	
 	function reDrawCanvas(e){
-		var target =  e.target.id;
+		var target =  e.target.getClass();
 		TagCloud.runBookmarklet(target);
 		lastTarget = e;
 	}
@@ -152,15 +152,53 @@ function canvasApp() {
 <br>
 <form>
 
-URL Feed: <input type="text" placeholder="enter url" id="rss" name="rss" value="http://leangains.com/"><br>
-Number of Posts: <input type="text" id="rsscount" name="rsscount" value="10"><input type="button" value="Scrape Feed" onClick="TagCloud.loadFromFeed()" id="loadRSS"><br><br>
-Public Twitter Feed: <input type="text" placeholder="enter username" id="twitter_user" name="twitter_user" value="twitterapi"><br> 
-Number of Tweets: <input type="text" id="tweets" name="tweets" value="10"><input type="button" value="Scrape Tweets" onClick="TagCloud.loadTweets()" id="loadTweets"><br><br>
-Twitter Search: <input type="text" placeholder="enter query" id="twitter_query" name="twitter_query" value="obama"><br> 
-Number of Tweets: <input type="text" id="twitter_query_count" name="twitter_query_count" value="10"><input type="button" value="Twitter Search" onClick="TagCloud.loadTwitterQuery()" id="loadTwitterQuery"><br><br>
-Enter your own text:
-  <br><textarea id="textBox" placeholder="enter text" rows="5" cols="80">Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows. Some pilots get picked and become television programs. Some don't, become nothing. She starred in one of the ones that became nothing.</textarea> 
-  <input type="button" value="Generate Cloud" onClick="TagCloud.runBookmarklet()">
+URL Feed: 			<input type="text" 
+					placeholder="enter url" 
+					id="rss" 
+					value="http://leangains.com/" 
+					class="loadRSS">
+					<br>
+Number of Posts: 	<input type="text" 
+					id="rsscount" 
+					value="10" 
+					class="loadRSS">
+					
+					<input type="button" value="Scrape Feed" onClick="TagCloud.loadFromFeed()" id="loadRSS" class="loadRSS">
+					<br><br>
+					
+					
+Public Twitter Feed: <input type="text" 
+					placeholder="enter username" 
+					id="twitter_user" 
+					class="loadTweets" 
+					value="twitterapi">
+					<br> 
+Number of Tweets: 	<input type="text" 
+					id="tweets" 
+					class="loadTweets" 
+					value="10">
+					
+					<input type="button" value="Scrape Tweets" onClick="TagCloud.loadTweets()" id="loadTweets" class="loadTweets">
+					<br><br>
+					
+					
+Twitter Search: 	<input type="text" 
+					placeholder="enter query" 
+					id="twitter_query" 
+					value="obama" 
+					class="loadTwitterQuery">
+					<br> 
+Number of Tweets: 	<input type="text" 
+					id="twitter_query_count" 
+					value="10" 
+					class="loadTwitterQuery">
+					
+					<input type="button" value="Twitter Search" onClick="TagCloud.loadTwitterQuery()" id="loadTwitterQuery" class="loadTwitterQuery">
+					<br><br>
+					
+Enter your own text: <br>
+					<textarea id="textBox" placeholder="enter text" rows="5" cols="80">Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows. Some pilots get picked and become television programs. Some don't, become nothing. She starred in one of the ones that became nothing.</textarea> 
+					<input type="button" value="Generate Cloud" onClick="TagCloud.runBookmarklet()">
 
  <br>
   
