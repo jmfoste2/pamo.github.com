@@ -1,6 +1,6 @@
 var JSONP = {}
 JSONP.get = function(url, callback){
-	if(!url){
+	if(url==null){
 				alert("No associated RSS feed found with url " + url);
 				return;
 		}
