@@ -63,15 +63,6 @@ function canvasApp() {
 		context.fillStyle = '#222';
 		context.fillRect(0, 0, theCanvas.width, theCanvas.height);
 		
-		context.font =  fontSize + "px " + font 
-		
-		var metrics = context.measureText(message)
-		var textWidth = metrics.width;
-		var xPosition = (theCanvas.width/2 - textWidth/2);
-		var yPosition = (theCanvas.height/2);
-		var tempColor = "#ff3322";
-		context.fillStyle    = tempColor;
-		<!--context.fillText  ( message,  xPosition ,yPosition);-->
 		WordyClouds.runBookmarklet();
 		
 	}
