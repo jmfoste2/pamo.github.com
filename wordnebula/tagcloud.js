@@ -351,13 +351,13 @@ TagCloud.runBookmarklet = function(target){
 		text = document.getElementById('textBox').value;	
 	    this.loadFromText(text)
 	}
-	else if(target == 'twitter_user' || target == 'loadTweets'){
+	else if(target == 'loadTweets'){
 		TagCloud.loadTweets();
 	}
-	else if(target == 'twitter_query' || target == 'loadTwitterQuery'){
+	else if(target == 'loadTwitterQuery'){
 		TagCloud.loadTwitterQuery();
 	}
-	else if (target == 'rss' || target == 'loadRSS'){
+	else if (target == 'loadRSS'){
 		TagCloud.loadFromFeed();
 	}
 
