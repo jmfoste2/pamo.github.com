@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Tag Nebula</title>
+<title>A Better Tag Cloud</title>
 <style type="text/css">
 body{
 	background: #222;
@@ -10,11 +10,25 @@ body{
 	size: 10px;
 	color: #fff;
 	}
+a {
+	color: #fff;	
+}
 </style>
-<script src="WordyClouds.js"></script>
+<script src="tagcloud.js"></script>
 <script type="text/javascript">
 
 window.addEventListener('load', eventWindowLoaded, false);	
+
+function changeColorScheme(bgcolor){
+	console.log('change color to ' + bgcolor);
+	var canvas = document.getElementById('display');
+	var context = canvas.getContext('2d'); 
+
+	document.body.style.background = bgcolor;
+	context.fillStyle = bgcolor;
+
+}
+
 function eventWindowLoaded() {
 
 	canvasApp();
@@ -108,7 +122,10 @@ function canvasApp() {
 <canvas id="display" width="800" height="300">
  Your browser does not support the HTML 5 Canvas. 
 </canvas>
-
+<br>
+<a href="#" onClick="changeColorScheme('#000099')">Change Background to Blue</a>
+<br>
+<a href="#" onClick="changeColorScheme('#FFF')">Change Background to White</a>
 <br>
 <form>
 URL Feed: <input type="text" placeholder="enter url" id="rss" name="rss" value="http://leangains.com/"><br>
