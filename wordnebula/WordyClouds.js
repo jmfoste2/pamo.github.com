@@ -290,22 +290,20 @@ WordyClouds.loadFromFeed = function(numEntries){
 	console.log('rss url entered: ' + url);
 	numEntries = numEntries || 10;
 	var rand = new Date().getTime()
-		if(JSONP.get('http://www.google.com/uds/GlookupFeed?context=0&hl=en&q=' + encodeURI(url) + '&v=1.0&nocache=' + rand, function(v, data){
-			rand = new Date().getTime()
-			JSONP.get('http://www.google.com/uds/Gfeeds?context=1&num=' + numEntries + '&hl=en&output=json&q=' + encodeURI(data.url) + '&v=1.0&nocache=' + rand, function(v, data){
-			       var entries = data.feed.entries;
-			   	   var text = '';
-			       entries.forEach(function(entry){
-			           text += entry.title + '\n';
-			   	       text += stripHTML(entry.content) + '\n';
-					})
-					
-				WordyClouds.loadFromText(text);	
-			})
-		}))
-   else {
+	JSONP.get('http://www.google.com/uds/GlookupFeed?context=0&hl=en&q=' + encodeURI(url) + '&v=1.0&nocache=' + rand, function(v, data){
+		rand = new Date().getTime()
+		JSONP.get('http://www.google.com/uds/Gfeeds?context=1&num=' + numEntries + '&hl=en&output=json&q=' + encodeURI(data.url) + '&v=1.0&nocache=' + rand, function(v, data){
+			var entries = data.feed.entries;
+			var text = '';
+			entries.forEach(function(entry){
+				text += entry.title + '\n';
+			   	text += stripHTML(entry.content) + '\n';
+			})			
+			
+			WordyClouds.loadFromText(text);	
+		})
+	})
    	alert("No associated RSS feed found with url " + url);
-   	}
    
 }
 
