@@ -264,13 +264,13 @@ Layouts.printWords = function PrintWordsLayout(canvas, colors, fontName){
 
 /* =========== main entry point ========================= */
 
-WordyClouds = {}
-WordyClouds.loadFromText = function(text){
+TagCloud = {}
+TagCloud.loadFromText = function(text){
     var commonWords = CommonWords.english
 	word_dictionary = createWords(text, commonWords)
     this.loadFromWordFreq()
 }
-WordyClouds.loadFromWordFreq = function(){
+TagCloud.loadFromWordFreq = function(){
     var layout = Layouts.printWords
     var palate = ColorPalettes.scheme1
     var fontName = getComputedStyle(document.body)['font-family']
@@ -282,7 +282,7 @@ WordyClouds.loadFromWordFreq = function(){
     layout(canvas, palate, fontName)
 }
 
-WordyClouds.loadTweets = function(){
+TagCloud.loadTweets = function(){
 	var count = document.getElementById('tweets').value;
 	var user = document.getElementById('twitter_user').value;
 	JSONP.get('https://api.twitter.com/1/statuses/user_timeline.json?include_entities=false&include_rts=false&screen_name=' + user + '&count='+ count + '&trim_user=true&exclude_replies=true', function(data){
@@ -291,12 +291,12 @@ WordyClouds.loadTweets = function(){
 			console.log(text);
 			text+=entry.text + '\n';
 		})	
-		WordyClouds.loadFromText(text);
+		TagCloud.loadFromText(text);
 		})	
 	
 }
 
-WordyClouds.loadTwitterQuery = function(){
+TagCloud.loadTwitterQuery = function(){
 	var twitter_query_count = document.getElementById('twitter_query_count').value;
 	var twitter_query = document.getElementById('twitter_query').value;
 	var queryURL = 'http://search.twitter.com/search.json?q='+ twitter_query +'&rpp='+ twitter_query_count +'&include_entities=false&result_type=mixed';
@@ -307,12 +307,12 @@ WordyClouds.loadTwitterQuery = function(){
 			console.log(text);
 			text+=entry.text + '\n';
 		})	
-		WordyClouds.loadFromText(text);
+		TagCloud.loadFromText(text);
 		})	
 	
 }
 
-WordyClouds.loadFromFeed = function(){
+TagCloud.loadFromFeed = function(){
 	var url = document.getElementById('rss').value;
 	console.log('rss url entered: ' + url);
 	var numEntries = document.getElementById('rsscount').value;
@@ -334,7 +334,7 @@ WordyClouds.loadFromFeed = function(){
 			   	text += stripHTML(entry.content) + '\n';
 			})			
 			
-			WordyClouds.loadFromText(text);	
+			TagCloud.loadFromText(text);	
 		})
 		}
 	})
@@ -343,12 +343,27 @@ WordyClouds.loadFromFeed = function(){
 }
 
 
-WordyClouds.runBookmarklet = function(){
-    var text = document.getElementById('textBox').value;
-    this.loadFromText(text)
+TagCloud.runBookmarklet = function(target){
+	target = target || 'textBox';
+	console.log("Running bookmarklet with target: " + target);
+	var text = '';
+	if(target == 'textBox'){
+		text = document.getElementById('textBox').value;	
+	    this.loadFromText(text)
+	}
+	else if(target == 'twitter_user'){
+		TagCloud.loadTweets();
+	}
+	else if(target == 'twitter_query'){
+		TagCloud.loadTwitterQuery();
+	}
+	else if (target == 'rss'){
+		TagCloud.loadFromFeed();
+	}
+
 }
 
-WordyClouds.processClick = function(x, y){
+TagCloud.processClick = function(x, y){
 	console.log("Before adjusting, user clicked at x="+x+", and y="+y);
 	x = x - 50;
 	y = y - 50;
