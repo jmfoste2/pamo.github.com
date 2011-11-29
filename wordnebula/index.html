@@ -118,9 +118,6 @@ function canvasApp() {
 <body background="#333333">
 
 <div style="position: absolute; top: 50px; left: 50px;" id="container">
-<canvas id="display" width="800" height="300">
- Your browser does not support the HTML 5 Canvas. 
-</canvas>
 <br>
 <form>
 URL Feed: <input type="text" placeholder="enter url" id="rss" name="rss" value="http://leangains.com/"><input type="button" value="Scrape!" onClick="WordyClouds.loadFromFeed()"><br><br>
@@ -147,6 +144,9 @@ Number of Tweets: <input type="text" id="tweets" name="tweets" value="5"><input 
 
 </div>
 
+<canvas id="display" width="800" height="300">
+ Your browser does not support the HTML 5 Canvas. 
+</canvas>
 
 </body>
 </html>
