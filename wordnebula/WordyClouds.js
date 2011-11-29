@@ -299,7 +299,12 @@ WordyClouds.loadFromFeed = function(numEntries){
     	           text += entry.title + '\n'
         	       text += stripHTML(entry.content) + '\n'
 				})
-		WordyClouds.loadFromText(text)
+		if(text==''){
+			alert('No valid RSS feed found!')
+		} else{
+			WordyClouds.loadFromText(text);	
+		}	
+		
        })
    })
 }
