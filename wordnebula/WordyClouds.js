@@ -291,12 +291,13 @@ WordyClouds.loadFromFeed = function(numEntries){
 	numEntries = numEntries || 10;
 	var rand = new Date().getTime()
 	JSONP.get('http://www.google.com/uds/GlookupFeed?context=0&hl=en&q=' + encodeURI(url) + '&v=1.0&nocache=' + rand, function(v, data){
-		if(data == null){
-			alert("No associated RSS feed found with url " + url);
-			return;
-		}
+		
 		rand = new Date().getTime()
 		JSONP.get('http://www.google.com/uds/Gfeeds?context=1&num=' + numEntries + '&hl=en&output=json&q=' + encodeURI(data.url) + '&v=1.0&nocache=' + rand, function(v, data){
+			if(data == null){
+				alert("No associated RSS feed found with url " + url);
+				return;
+			}
 			var entries = data.feed.entries;
 			var text = '';
 			entries.forEach(function(entry){
