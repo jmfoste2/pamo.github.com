@@ -269,24 +269,27 @@ WordyClouds.loadFromDelicious = function(username){
         WordyClouds.loadFromWordFreq(data)
     })
 }
+
 WordyClouds.loadFromFeed = function(numEntries){
 	var url = document.getElementById('rss').value;
 	console.log('rss url entered: ' + url);
    numEntries = numEntries || 10
    var rand = new Date().getTime()
    JSONP.get('http://www.google.com/uds/GlookupFeed?context=0&hl=en&q=' + encodeURI(url) + '&v=1.0&nocache=' + rand, function(v, data){
-       rand = new Date().getTime()
-       JSONP.get('http://www.google.com/uds/Gfeeds?context=1&num=' + numEntries + '&hl=en&output=json&q=' + encodeURI(data.url) + '&v=1.0&nocache=' + rand, function(v, data){
-           var entries = data.feed.entries
-           var text = ''
-           entries.forEach(function(entry){
-               text += entry.title + '\n'
-               text += stripHTML(entry.content) + '\n'
-           })
-           WordyClouds.loadFromText(text)
+   		rand = new Date().getTime()
+	    JSONP.get('http://www.google.com/uds/Gfeeds?context=1&num=' + numEntries + '&hl=en&output=json&q=' + encodeURI(data.url) + '&v=1.0&nocache=' + rand, function(v, data){
+    	       var entries = data.feed.entries
+        	   var text = ''
+	           entries.forEach(function(entry){
+    	           text += entry.title + '\n'
+        	       text += stripHTML(entry.content) + '\n'
+				})
+		WordyClouds.loadFromText(text)
        })
    })
 }
+
+
 WordyClouds.runBookmarklet = function(){
     var text = document.getElementById('textBox').value;
     this.loadFromText(text)
