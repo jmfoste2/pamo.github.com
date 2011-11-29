@@ -76,13 +76,13 @@ function canvasApp() {
 	formElement.addEventListener('change', reDrawCanvas, false);
 	
 	formElement = document.getElementById("loadRSS")
-	formElement.addEventListener('change', reDrawCanvas, false);
+	formElement.addEventListener('click', reDrawCanvas, false);
 	
 	formElement = document.getElementById("loadTweets")
-	formElement.addEventListener('change', reDrawCanvas, false);	
+	formElement.addEventListener('click', reDrawCanvas, false);	
 	
 	formElement = document.getElementById("loadTwitterQuery")
-	formElement.addEventListener('change', reDrawCanvas, false);	
+	formElement.addEventListener('click', reDrawCanvas, false);	
 	
 	
 	theCanvas.addEventListener("mousedown", changeColor, false );
