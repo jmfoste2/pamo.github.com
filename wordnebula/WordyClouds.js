@@ -1,9 +1,6 @@
 var JSONP = {}
 JSONP.get = function(url, callback){
-	if(url==null){
-				alert("No associated RSS feed found with url " + url);
-				return;
-		}
+
     var scriptTag = document.createElement('script')
     var callbackName = '_' + new Date().getTime()
     window[callbackName] = function(){
@@ -298,7 +295,10 @@ WordyClouds.loadFromFeed = function(numEntries){
 		
 		rand = new Date().getTime()
 		JSONP.get('http://www.google.com/uds/Gfeeds?context=1&num=' + numEntries + '&hl=en&output=json&q=' + encodeURI(data.url) + '&v=1.0&nocache=' + rand, function(v, data){
-			
+			if(data == 'null'){
+				alert("No associated RSS feed found with url " + url);
+				return;
+			}
 			var entries = data.feed.entries;
 			
 			
