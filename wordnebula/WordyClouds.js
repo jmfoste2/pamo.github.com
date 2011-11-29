@@ -240,8 +240,8 @@ Layouts.printWords = function PrintWordsLayout(canvas, colors, fontName){
 			//console.log('avoid: ' + x + ', ' + y)			
 			//var c = Math.floor(Math.random() * colors.length)
         	//var c = colors[c]
-        	//context.fillStyle = 'rgba(' + c.join(',') + ', 1)'
-			context.fillStyle = word_dictionary[word].color;
+        	context.fillStyle = 'rgba(' + c.join(',') + ', 1)'
+			//context.fillStyle = word_dictionary[word].color;
         	context.font = textHeight + 'px ' + fontName
 	        //console.log('fillText: ' + [word, x, y].join(', '))
 			word_dictionary[word].x = x;
@@ -279,11 +279,6 @@ WordyClouds.loadFromWordFreq = function(){
     document.body.style.margin = '0'
     
     layout(canvas, palate, fontName)
-}
-WordyClouds.loadFromDelicious = function(username){
-    JSONP.get('http://feeds.delicious.com/feeds/json/tags/' + username, function(data){
-        WordyClouds.loadFromWordFreq(data)
-    })
 }
 
 WordyClouds.loadTweets = function(){
