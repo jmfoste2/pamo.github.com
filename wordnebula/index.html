@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Canvas Resize</title>
+<style type="text/css">
+body{
+	background: #222;
+	font-family: "Tahoma";
+	size: 10px;
+	color: #fff;
+	}
+</style>
+<script src="WordyClouds.js"></script>
+<script type="text/javascript">
+
+window.addEventListener('load', eventWindowLoaded, false);	
+function eventWindowLoaded() {
+
+	canvasApp();
+}
+//consoleLog 
+//*** consoleLog util class
+//create constructor
+
+
+function eventWindowLoaded() {
+	
+	canvasApp();
+}
+
+
+function canvasApp() {
+		
+	var message = "Tag Cloud";
+	var fontSize = "20";
+	var font = "Tahoma";
+	
+	
+	var theCanvas = document.getElementById('display');
+	var container = document.getElementById('container');
+	if (!theCanvas || !theCanvas.getContext) {
+  		 return;
+	}
+	theCanvas.width = window.innerWidth-(window.innerWidth/6);
+	theCanvas.height = window.innerHeight/2;
+	
+	var context = theCanvas.getContext('2d'); 
+	
+
+		
+	var formElement = document.getElementById("textBox");
+	formElement.addEventListener('change', textBoxChanged, false);	
+	
+	formElement = document.getElementById("canvasWidth")
+	formElement.addEventListener('change', canvasWidthChanged, false);	
+	
+	formElement = document.getElementById("canvasHeight")
+	formElement.addEventListener('change', canvasHeightChanged, false);
+	
+	theCanvas.addEventListener("mousedown", changeColor, false );
+	
+	drawScreen();
+	
+	function drawScreen() {
+		
+		context.fillStyle = '#222';
+		context.fillRect(0, 0, theCanvas.width, theCanvas.height);
+		
+		context.font =  fontSize + "px " + font 
+		
+		var metrics = context.measureText(message)
+		var textWidth = metrics.width;
+		var xPosition = (theCanvas.width/2 - textWidth/2);
+		var yPosition = (theCanvas.height/2);
+		var tempColor = "#ff3322";
+		context.fillStyle    = tempColor;
+		<!--context.fillText  ( message,  xPosition ,yPosition);-->
+		WordyClouds.runBookmarklet();
+		
+	}
+	
+	function textBoxChanged(e) {
+		var target =  e.target;
+		message = target.value;
+		drawScreen();
+	}
+	
+
+	function canvasWidthChanged(e) {
+		var target =  e.target;
+		theCanvas.width =  target.value;
+		container.width =  target.value;
+		drawScreen();
+	}
+	
+	function canvasHeightChanged(e) {
+		var target =  e.target;
+		theCanvas.height =  target.value;
+		container.height =  target.value;
+		
+		drawScreen();
+	}
+	
+	function changeColor(e) {
+		WordyClouds.processClick(e.pageX, e.pageY);
+		
+	}
+	
+	
+		
+}
+
+
+
+</script> 
+</head>
+<body background="#333333">
+
+<div style="position: absolute; top: 50px; left: 50px;" id="container">
+<canvas id="display" width="800" height="300">
+ Your browser does not support the HTML 5 Canvas. 
+</canvas>
+<br>
+<form>
+  Text:   <input type="button" value="Refresh Cloud" onClick="WordyClouds.runBookmarklet()">
+  <br><textarea id="textBox" placeholder="enter text" rows="5" cols="80">
+
+</textarea> 
+
+ <br>
+  
+ Canvas Width:  <input type="range" id="canvasWidth"
+       min="0"
+       max="1000"
+       step="1"
+       value="500"/>
+ <br>      
+  
+  Canvas Height:
+  <input type="range" id="canvasHeight"
+       min="0"
+       max="1000"
+       step="1"
+       value="300"/>
+
+</div>
+
+
+</body>
+</html>
+
+
+
+
