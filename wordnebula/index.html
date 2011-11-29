@@ -124,11 +124,12 @@ function canvasApp() {
 
 <br>
 <form>
-URL Feed: <input type="text" placeholder="enter url" id="rss" name="rss" value="http://leangains.com/"><input type="button" value="Scrape!" onClick="WordyClouds.loadFromFeed()"><br><br>
-Twitter Feed: <input type="text" placeholder="enter username" id="twitter_user" name="twitter_user" value="pmocampo"><br> 
-Number of Tweets: <input type="text" id="tweets" name="tweets" value="5"><input type="button" value="Scrape!" onClick="WordyClouds.loadTweets()"><br><br>
-  Text:   <input type="button" value="Refresh Cloud" onClick="WordyClouds.runBookmarklet()">
+URL Feed: <input type="text" placeholder="enter url" id="rss" name="rss" value="http://leangains.com/"><input type="button" value="Scrape Feed" onClick="WordyClouds.loadFromFeed()"><br><br>
+Twitter Feed: <input type="text" placeholder="enter username" id="twitter_user" name="twitter_user" value="twitterapi"><br> 
+Number of Tweets: <input type="text" id="tweets" name="tweets" value="5"><input type="button" value="Scrape Tweets" onClick="WordyClouds.loadTweets()"><br><br>
+Text:
   <br><textarea id="textBox" placeholder="enter text" rows="5" cols="80">Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows. Some pilots get picked and become television programs. Some don't, become nothing. She starred in one of the ones that became nothing.</textarea> 
+  <input type="button" value="Generate Cloud" onClick="WordyClouds.runBookmarklet()">
 
  <br>
   
