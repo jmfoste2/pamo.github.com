@@ -269,7 +269,7 @@ WordyClouds.loadFromDelicious = function(username){
         WordyClouds.loadFromWordFreq(data)
     })
 }
-WordyClouds.loadFromFeed = function(){
+WordyClouds.loadFromFeed = function(var numEntries){
    numEntries = numEntries || 10
    var rand = new Date().getTime()
    var url = document.getElementById('rss').value;
