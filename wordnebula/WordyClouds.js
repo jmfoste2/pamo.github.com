@@ -295,7 +295,7 @@ WordyClouds.loadTweets = function(){
 			console.log(text);
 			text+=entry.text + '\n';
 		})	
-		WordyClouds.loadFromWordFreq(text);
+		WordyClouds.loadFromText(text);
 		})	
 	
 }
