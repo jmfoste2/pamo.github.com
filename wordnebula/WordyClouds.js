@@ -269,7 +269,8 @@ WordyClouds.loadFromDelicious = function(username){
         WordyClouds.loadFromWordFreq(data)
     })
 }
-WordyClouds.loadFromFeed = function(url, numEntries){
+WordyClouds.loadFromFeed = function(numEntries){
+	var url = document.getElementById('rss').value;
    numEntries = numEntries || 10
    var rand = new Date().getTime()
    JSONP.get('http://www.google.com/uds/GlookupFeed?context=0&hl=en&q=' + encodeURI(url) + '&v=1.0&nocache=' + rand, function(v, data){
