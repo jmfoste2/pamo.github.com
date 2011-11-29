@@ -286,10 +286,10 @@ WordyClouds.loadFromDelicious = function(username){
     })
 }
 
-WordyClouds.loadFromTwitter = function(){
-	var username = document.getElementById('twitter_user').value;
+WordyClouds.loadTweets = function(){
 	var count = document.getElementById('tweets').value;
-	JSONP.get('https://api.twitter.com/1/statuses/user_timeline.json?include_entities=false&include_rts=false&screen_name=' + username + '&count='+ count + '&trim_user=true&exclude_replies=true', function(data){
+	var user = document.getElementById('twitter_user').value;
+	JSONP.get('https://api.twitter.com/1/statuses/user_timeline.json?include_entities=false&include_rts=false&screen_name=' + user + '&count='+ count + '&trim_user=true&exclude_replies=true', function(data){
 		var text = '';
 		data.forEach(function(entry){
 			text+=entry.text + '\n';
