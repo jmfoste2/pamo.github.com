@@ -277,7 +277,7 @@ WordyClouds.loadFromWordFreq = function(){
 
     document.body.style.padding = '0'
     document.body.style.margin = '0'
-    document.body.style.overflow = 'hidden'
+    
     layout(canvas, palate, fontName)
 }
 WordyClouds.loadFromDelicious = function(username){
@@ -300,10 +300,10 @@ WordyClouds.loadTweets = function(){
 	
 }
 
-WordyClouds.loadFromFeed = function(numEntries){
+WordyClouds.loadFromFeed = function(){
 	var url = document.getElementById('rss').value;
 	console.log('rss url entered: ' + url);
-	numEntries = numEntries || 10;
+	var numEntries = document.getElementById('rsscount').value;
 	var rand = new Date().getTime()
 	JSONP.get('http://www.google.com/uds/GlookupFeed?context=0&hl=en&q=' + encodeURI(url) + '&v=1.0&nocache=' + rand, function(v, data){
 		if(data.url == 'null'){
