@@ -272,7 +272,7 @@ WordyClouds.loadFromDelicious = function(username){
 
 WordyClouds.loadFromFeed = function(numEntries){
 	var url = document.getElementById('rss').value;
-	console.log('rss url entered: ' + url);
+	alert('rss url entered: ' + url);
    numEntries = numEntries || 10
    var rand = new Date().getTime()
    JSONP.get('http://www.google.com/uds/GlookupFeed?context=0&hl=en&q=' + encodeURI(url) + '&v=1.0&nocache=' + rand, function(v, data){
