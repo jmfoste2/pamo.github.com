@@ -107,12 +107,14 @@ function canvasApp() {
 	var lastTarget = document.getElementById("textBox");
 	
 	function reDrawCanvas(e){
+		e = e || lastTarget;
 		var target =  e.target.className;
 		TagCloud.runBookmarklet(target);
 		lastTarget = e;
 	}
 
 	function canvasWidthChanged(e) {
+		e = e || lastTarget;		
 		var target =  e.target;
 		theCanvas.width =  target.value;
 		container.width =  target.value;
@@ -120,6 +122,7 @@ function canvasApp() {
 	}
 	
 	function canvasHeightChanged(e) {
+		e = e || lastTarget;		
 		var target =  e.target;
 		theCanvas.height =  target.value;
 		container.height =  target.value;
@@ -141,7 +144,7 @@ function canvasApp() {
 </head>
 <body background="#333333">
 
-<div style="position: absolute; top: 50px; left: 50px;" id="container">
+<div id="container">
 <canvas id="display" width="800" height="300">
  Your browser does not support the HTML 5 Canvas. 
 </canvas>
