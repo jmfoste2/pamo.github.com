@@ -73,6 +73,15 @@ function canvasApp() {
 	formElement.addEventListener('change', reDrawCanvas, false);	
 	
 	formElement = document.getElementById("twitter_query")
+	formElement.addEventListener('change', reDrawCanvas, false);
+	
+	formElement = document.getElementById("loadRSS")
+	formElement.addEventListener('change', reDrawCanvas, false);
+	
+	formElement = document.getElementById("loadTweets")
+	formElement.addEventListener('change', reDrawCanvas, false);	
+	
+	formElement = document.getElementById("loadTwitterQuery")
 	formElement.addEventListener('change', reDrawCanvas, false);	
 	
 	
@@ -144,11 +153,11 @@ function canvasApp() {
 <form>
 
 URL Feed: <input type="text" placeholder="enter url" id="rss" name="rss" value="http://leangains.com/"><br>
-Number of Posts: <input type="text" id="rsscount" name="rsscount" value="10"><input type="button" value="Scrape Feed" onClick="TagCloud.loadFromFeed()"><br><br>
+Number of Posts: <input type="text" id="rsscount" name="rsscount" value="10"><input type="button" value="Scrape Feed" onClick="TagCloud.loadFromFeed()" id="loadRSS"><br><br>
 Public Twitter Feed: <input type="text" placeholder="enter username" id="twitter_user" name="twitter_user" value="twitterapi"><br> 
-Number of Tweets: <input type="text" id="tweets" name="tweets" value="10"><input type="button" value="Scrape Tweets" onClick="TagCloud.loadTweets()"><br><br>
+Number of Tweets: <input type="text" id="tweets" name="tweets" value="10"><input type="button" value="Scrape Tweets" onClick="TagCloud.loadTweets()" id="loadTweets"><br><br>
 Twitter Search: <input type="text" placeholder="enter query" id="twitter_query" name="twitter_query" value="obama"><br> 
-Number of Tweets: <input type="text" id="twitter_query_count" name="twitter_query_count" value="10"><input type="button" value="Twitter Search" onClick="TagCloud.loadTwitterQuery()"><br><br>
+Number of Tweets: <input type="text" id="twitter_query_count" name="twitter_query_count" value="10"><input type="button" value="Twitter Search" onClick="TagCloud.loadTwitterQuery()" id="loadTwitterQuery"><br><br>
 Enter your own text:
   <br><textarea id="textBox" placeholder="enter text" rows="5" cols="80">Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows. Some pilots get picked and become television programs. Some don't, become nothing. She starred in one of the ones that became nothing.</textarea> 
   <input type="button" value="Generate Cloud" onClick="TagCloud.runBookmarklet()">
