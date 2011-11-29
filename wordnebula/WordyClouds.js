@@ -219,10 +219,10 @@ Layouts.printWords = function PrintWordsLayout(canvas, colors, fontName){
 			avoid_x = x;
 			var y = avoid_y;
 			//console.log('avoid: ' + x + ', ' + y + ', avoid_x=' + avoid_x)
-			//var c = Math.floor(Math.random() * colors.length)
+			var c = Math.floor(Math.random() * colors.length)
         	//var c = word_dictionary[word].color;
-        	//context.fillStyle = 'rgba(' + c.join(',') + ', 1)'
-			context.fillStyle = word_dictionary[word].color;
+        	context.fillStyle = 'rgba(' + c.join(',') + ', 1)'
+			//context.fillStyle = word_dictionary[word].color;
         	context.font = textHeight + 'px ' + fontName
 	        //console.log('fillText: ' + [word, x, y].join(', '))
 			word_dictionary[word].x = x;
