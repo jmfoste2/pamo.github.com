@@ -298,7 +298,9 @@ WordyClouds.loadTweets = function(){
 WordyClouds.loadTwitterQuery = function(){
 	var count = document.getElementById('twitter_query_count').value;
 	var user = document.getElementById('twitter_query').value;
-	JSONP.get('http://search.twitter.com/search.json?q='+ twitter_query +'&rpp='+ twitter_query_count +'&include_entities=false&result_type=mixed', function(data){
+	var queryURL = 'http://search.twitter.com/search.json?q='+ twitter_query +'&rpp='+ twitter_query_count +'&include_entities=false&result_type=mixed';
+	console.log('Twitter Query URL ' + queryURL);
+	JSONP.get(queryURL, function(data){
 		var text = '';
 		data.results.forEach(function(entry){
 			console.log(text);
