@@ -46,8 +46,6 @@ function canvasApp() {
 	var fontSize = "20";
 	var font = "Tahoma";
 	
-	var lastTarget = document.getElementById("textBox");
-	
 	
 	var theCanvas = document.getElementById('display');
 	var container = document.getElementById('container');
@@ -92,7 +90,7 @@ function canvasApp() {
 	drawScreen();
 	
 	function drawScreen() {
-		lastTarget = document.getElementById("textBox");
+		
 		context.fillStyle = '#222';
 		context.fillRect(0, 0, theCanvas.width, theCanvas.height);
 		
@@ -106,9 +104,9 @@ function canvasApp() {
 		reDrawCanvas(target);
 	}
 	
+	var lastTarget = document.getElementById("textBox");
 	
 	function reDrawCanvas(e){
-		e = e || lastTarget;
 		var target =  e.target.className;
 		TagCloud.runBookmarklet(target);
 		lastTarget = e;
@@ -118,7 +116,6 @@ function canvasApp() {
 		var target =  e.target;
 		theCanvas.width =  target.value;
 		container.width =  target.value;
-		console.log("canvasWidthChanged()::"+ lastTarget.target.className);
 		reDrawCanvas(lastTarget);
 	}
 	
@@ -126,7 +123,6 @@ function canvasApp() {
 		var target =  e.target;
 		theCanvas.height =  target.value;
 		container.height =  target.value;
-		console.log("canvasHeightChanged()::"+ lastTarget.target.className);
 		reDrawCanvas(lastTarget);
 	}
 	
@@ -145,7 +141,7 @@ function canvasApp() {
 </head>
 <body background="#333333">
 
-<div id="container">
+<div style="position: absolute; top: 50px; left: 50px;" id="container">
 <canvas id="display" width="800" height="300">
  Your browser does not support the HTML 5 Canvas. 
 </canvas>
@@ -201,7 +197,7 @@ Number of Tweets: 	<input type="text"
 					<br><br>
 					
 Enter your own text: <br>
-					<textarea id="textBox" class="textBox" placeholder="enter text" rows="5" cols="80">Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows. Some pilots get picked and become television programs. Some don't, become nothing. She starred in one of the ones that became nothing.</textarea> 
+					<textarea id="textBox" placeholder="enter text" rows="5" cols="80">Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows. Some pilots get picked and become television programs. Some don't, become nothing. She starred in one of the ones that became nothing.</textarea> 
 					<input type="button" value="Generate Cloud" onClick="TagCloud.runBookmarklet()">
 
  <br>
