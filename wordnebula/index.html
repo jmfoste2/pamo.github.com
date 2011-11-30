@@ -46,6 +46,8 @@ function canvasApp() {
 	var fontSize = "20";
 	var font = "Tahoma";
 	
+	var lastTarget = document.getElementById("textBox");
+	
 	
 	var theCanvas = document.getElementById('display');
 	var container = document.getElementById('container');
@@ -90,7 +92,7 @@ function canvasApp() {
 	drawScreen();
 	
 	function drawScreen() {
-		
+		lastTarget = document.getElementById("textBox");
 		context.fillStyle = '#222';
 		context.fillRect(0, 0, theCanvas.width, theCanvas.height);
 		
@@ -104,7 +106,6 @@ function canvasApp() {
 		reDrawCanvas(target);
 	}
 	
-	var lastTarget = document.getElementById("textBox");
 	
 	function reDrawCanvas(e){
 		e = e || lastTarget;
@@ -114,18 +115,18 @@ function canvasApp() {
 	}
 
 	function canvasWidthChanged(e) {
-		e = e || lastTarget;		
 		var target =  e.target;
 		theCanvas.width =  target.value;
 		container.width =  target.value;
+		console.log("canvasWidthChanged()::"+ lastTarget.target.className);
 		reDrawCanvas(lastTarget);
 	}
 	
 	function canvasHeightChanged(e) {
-		e = e || lastTarget;		
 		var target =  e.target;
 		theCanvas.height =  target.value;
 		container.height =  target.value;
+		console.log("canvasHeightChanged()::"+ lastTarget.target.className);
 		reDrawCanvas(lastTarget);
 	}
 	
