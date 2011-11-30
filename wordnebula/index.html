@@ -7,31 +7,62 @@
 body{
 	background: #222;
 	font-family: "Tahoma";
-	size: 10px;
+	font-size: 12px;
 	color: #fff;
 	}
 a {
 	color: #fff;	
 }
+label {
+	clear: left;
+	float: left;
+	width: 9em; 
+	vertical-align: center;
+}
+#form {
+	text-align: left;
+	margin: 0px 0px;
+	padding: 0px;
+	border:0;
+	width: 800px;
+}
+#side-a {
+	float: left;
+	width: 200px;
+}
+#side-b { 
+	margin: 0;
+	float: left;
+	width: 500px;
+	height: 1% /* Holly hack for Peekaboo Bug */
+}
 </style>
 <script src="tagcloud.js"></script>
 <script type="text/javascript">
 
-window.addEventListener('load', eventWindowLoaded, false);	
+window.addEventListener('load', eventWindowLoaded, false);
+	var lastTarget, canvas, container, context = {};
 
 function changeColorScheme(bgcolor){
 	console.log('change color to ' + bgcolor);
-	var canvas = document.getElementById('display');
-	var context = canvas.getContext('2d'); 
 
 	document.body.style.background = bgcolor;
 	context.fillStyle = bgcolor;
 
 }
 
-function eventWindowLoaded() {
-
-	canvasApp();
+function sampleText(source){
+	var textBox = document.getElementById('textBox');
+	if(source == 'di'){
+		textBox.value = "We the people blah";	
+	}
+	else if(source == 'lp'){
+		textBox.value = "The little pricne blah";	
+	}
+	else if (source == 'fb'){
+		textBox.value = "Gap customers hate the new logo";	
+	}
+	TagCloud.loadFromText(textBox.value);
 }
 
 function eventWindowLoaded() {
@@ -45,18 +76,17 @@ function canvasApp() {
 	var message = "Tag Cloud";
 	var fontSize = "20";
 	var font = "Tahoma";
+	lastTarget = document.getElementById("textBox");
+	canvas = document.getElementById('display');
+	container = document.getElementById('container');
+	context = canvas.getContext('2d');
 	
-	
-	var theCanvas = document.getElementById('display');
-	var container = document.getElementById('container');
-	if (!theCanvas || !theCanvas.getContext) {
+	if (!canvas || !canvas.getContext) {
   		 return;
 	}
-	theCanvas.width = window.innerWidth-(window.innerWidth/6);
-	theCanvas.height = window.innerHeight/2;
-	
-	var context = theCanvas.getContext('2d'); 
-	
+	canvas.width = window.innerWidth-(window.innerWidth/6);
+	canvas.height = window.innerHeight/2;
+		
 	var formElement = document.getElementById("textBox");
 	formElement.addEventListener('change', textBoxChanged, false);	
 	
@@ -85,14 +115,15 @@ function canvasApp() {
 	formElement.addEventListener('click', reDrawCanvas, false);	
 	
 	
-	theCanvas.addEventListener("mousedown", changeColor, false );
+	canvas.addEventListener("mousedown", changeColor, false );
 	
 	drawScreen();
+}
 	
 	function drawScreen() {
 		
 		context.fillStyle = '#222';
-		context.fillRect(0, 0, theCanvas.width, theCanvas.height);
+		context.fillRect(0, 0, canvas.width, canvas.height);
 		
 		TagCloud.runBookmarklet();
 		
@@ -104,7 +135,6 @@ function canvasApp() {
 		reDrawCanvas(target);
 	}
 	
-	var lastTarget = document.getElementById("textBox");
 	
 	function reDrawCanvas(e){
 		var target =  e.target.className;
@@ -114,14 +144,14 @@ function canvasApp() {
 
 	function canvasWidthChanged(e) {
 		var target =  e.target;
-		theCanvas.width =  target.value;
+		canvas.width =  target.value;
 		container.width =  target.value;
 		reDrawCanvas(lastTarget);
 	}
 	
 	function canvasHeightChanged(e) {
 		var target =  e.target;
-		theCanvas.height =  target.value;
+		canvas.height =  target.value;
 		container.height =  target.value;
 		reDrawCanvas(lastTarget);
 	}
@@ -130,93 +160,96 @@ function canvasApp() {
 		TagCloud.processClick(e.pageX, e.pageY);
 		
 	}
-	
-	
-		
-}
 
 
 
 </script> 
 </head>
-<body background="#333333">
+<body background="#333333" onLoad="canvasApp()">
 
-<div style="position: absolute; top: 50px; left: 50px;" id="container">
-<canvas id="display" width="800" height="300">
+Change BG to <a href="#" onClick="changeColorScheme('#000099')">Blue</a> or <a href="#" onClick="changeColorScheme('#FFF')">White</a>
+
+<div id="form">
+
+<form>
+	<div id="side-a">
+	<div><label>URL Feed:</label>
+	<input 	type="text" 
+			placeholder="enter url" 
+			id="rss" 
+			value="http://leangains.com/" 
+			class="loadRSS" />
+	</div>
+	<div><label>Number of Posts:</label>
+	<input 	type="text" 
+			id="rsscount" 
+			value="10" 
+			class="loadRSS">
+			<input type="button" value="Scrape Feed" onClick="TagCloud.loadFromFeed()" id="loadRSS" class="loadRSS">
+	</div>
+	<div><label>Public Twitter Feed:</label>
+	<input 	type="text" 
+			placeholder="enter username" 
+			id="twitter_user" 
+			class="loadTweets" 
+			value="twitterapi">
+	</div>
+	<div><label>Number of Tweets:</label>
+	<input 	type="text" 
+			id="tweets" 
+			class="loadTweets" 
+			value="10">
+			<input type="button" value="Scrape Tweets" onClick="TagCloud.loadTweets()" id="loadTweets" class="loadTweets">
+	</div>
+	<div><label>Twitter Search:</label>
+	<input 	type="text" 
+			placeholder="enter query" 
+			id="twitter_query" 
+			value="obama" 
+			class="loadTwitterQuery">
+	</div>
+	<div><label>Number of Tweets:</label>
+	<input 	type="text" 
+			id="twitter_query_count" 
+			value="10" 
+			class="loadTwitterQuery">
+			<input type="button" value="Twitter Search" onClick="TagCloud.loadTwitterQuery()" id="loadTwitterQuery" class="loadTwitterQuery">
+	</div>
+</div>
+<div id="side-b">
+	<div><label>Enter your own text:</label>
+	<textarea id="textBox" placeholder="enter text" rows="5" cols="80">Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows. Some pilots get picked and become television programs. Some don't, become nothing. She starred in one of the ones that became nothing.</textarea> 
+			<input type="button" value="Generate Cloud" onClick="TagCloud.runBookmarklet()">
+	</div>				
+	<div><label>Canvas Width:</label>
+	<input 	type="range" 
+			id="canvasWidth"
+			min="0"
+			max="1000"
+			step="1"
+			value="800"/>
+	</div>
+	<div><label>Canvas Height:</label>
+	<input 	type="range" 
+			id="canvasHeight"
+       		min="0"
+       		max="1000"
+       		step="1"
+		    value="500"/>
+	</div>
+	<div><label>Sample Texts</label><br>
+	<ul>
+	<li><a href="#" onClick="sampleText('di')" />US Declaration of Independence</a></li>
+	<li><a href="#" onClick="sampleText('lp')" />Text from The Little Prince</a></li>
+	<li><a href="#" onClick="sampleText('fb')" />Comments from Gap's Facebook Wall</a></li>
+	</div>
+</div>	
+</div>
+
+<div  id="container">
+<canvas id="display" width="800" height="500">
  Your browser does not support the HTML 5 Canvas. 
 </canvas>
-<br>
-<a href="#" onClick="changeColorScheme('#000099')">Change Background to Blue</a>
-<br>
-<a href="#" onClick="changeColorScheme('#FFF')">Change Background to White</a>
-<br>
-<form>
-
-URL Feed: 			<input type="text" 
-					placeholder="enter url" 
-					id="rss" 
-					value="http://leangains.com/" 
-					class="loadRSS">
-					<br>
-Number of Posts: 	<input type="text" 
-					id="rsscount" 
-					value="10" 
-					class="loadRSS">
-					
-					<input type="button" value="Scrape Feed" onClick="TagCloud.loadFromFeed()" id="loadRSS" class="loadRSS">
-					<br><br>
-					
-					
-Public Twitter Feed: <input type="text" 
-					placeholder="enter username" 
-					id="twitter_user" 
-					class="loadTweets" 
-					value="twitterapi">
-					<br> 
-Number of Tweets: 	<input type="text" 
-					id="tweets" 
-					class="loadTweets" 
-					value="10">
-					
-					<input type="button" value="Scrape Tweets" onClick="TagCloud.loadTweets()" id="loadTweets" class="loadTweets">
-					<br><br>
-					
-					
-Twitter Search: 	<input type="text" 
-					placeholder="enter query" 
-					id="twitter_query" 
-					value="obama" 
-					class="loadTwitterQuery">
-					<br> 
-Number of Tweets: 	<input type="text" 
-					id="twitter_query_count" 
-					value="10" 
-					class="loadTwitterQuery">
-					
-					<input type="button" value="Twitter Search" onClick="TagCloud.loadTwitterQuery()" id="loadTwitterQuery" class="loadTwitterQuery">
-					<br><br>
-					
-Enter your own text: <br>
-					<textarea id="textBox" placeholder="enter text" rows="5" cols="80">Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows. Some pilots get picked and become television programs. Some don't, become nothing. She starred in one of the ones that became nothing.</textarea> 
-					<input type="button" value="Generate Cloud" onClick="TagCloud.runBookmarklet()">
-
- <br>
-  
- Canvas Width:  <input type="range" id="canvasWidth"
-       min="0"
-       max="1000"
-       step="1"
-       value="500"/>
- <br>      
-  
-  Canvas Height:
-  <input type="range" id="canvasHeight"
-       min="0"
-       max="1000"
-       step="1"
-       value="300"/>
-
-
 </div>
 
 </body>
