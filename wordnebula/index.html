@@ -42,6 +42,8 @@ label {
 	height: 1% /* Holly hack for Peekaboo Bug */
 }
 </style>
+
+<script src="sampletext.js"></script>
 <script src="tagcloud.js"></script>
 <script type="text/javascript">
 
@@ -59,7 +61,7 @@ function changeColorScheme(bgcolor){
 function sampleText(source){
 	var textBox = document.getElementById('textBox');
 	if(source == 'di'){
-		textBox.value = "We the people blah";	
+		textBox.value = SampleText.declaration;	
 	}
 	else if(source == 'lp'){
 		textBox.value = "The little pricne blah";	
