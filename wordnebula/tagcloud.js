@@ -90,6 +90,7 @@ function keys(obj){
 
 function tokenize(text, commonWords){
     return text
+    	.replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, ' ')
         .replace(/[^\'a-zA-Z]/g, ' ')
         .split(' ')
         .filter(function(p){return p != ''})
@@ -263,13 +264,13 @@ Layouts.printWords = function PrintWordsLayout(canvas, colors, fontName){
 
 /* =========== main entry point ========================= */
 
-WordyClouds = {}
-WordyClouds.loadFromText = function(text){
+TagCloud = {}
+TagCloud.loadFromText = function(text){
     var commonWords = CommonWords.english
 	word_dictionary = createWords(text, commonWords)
     this.loadFromWordFreq()
 }
-WordyClouds.loadFromWordFreq = function(){
+TagCloud.loadFromWordFreq = function(){
     var layout = Layouts.printWords
     var palate = ColorPalettes.scheme1
     var fontName = getComputedStyle(document.body)['font-family']
@@ -281,7 +282,7 @@ WordyClouds.loadFromWordFreq = function(){
     layout(canvas, palate, fontName)
 }
 
-WordyClouds.loadTweets = function(){
+TagCloud.loadTweets = function(){
 	var count = document.getElementById('tweets').value;
 	var user = document.getElementById('twitter_user').value;
 	JSONP.get('https://api.twitter.com/1/statuses/user_timeline.json?include_entities=false&include_rts=false&screen_name=' + user + '&count='+ count + '&trim_user=true&exclude_replies=true', function(data){
@@ -290,12 +291,12 @@ WordyClouds.loadTweets = function(){
 			console.log(text);
 			text+=entry.text + '\n';
 		})	
-		WordyClouds.loadFromText(text);
+		TagCloud.loadFromText(text);
 		})	
 	
 }
 
-WordyClouds.loadTwitterQuery = function(){
+TagCloud.loadTwitterQuery = function(){
 	var twitter_query_count = document.getElementById('twitter_query_count').value;
 	var twitter_query = document.getElementById('twitter_query').value;
 	var queryURL = 'http://search.twitter.com/search.json?q='+ twitter_query +'&rpp='+ twitter_query_count +'&include_entities=false&result_type=mixed';
@@ -306,12 +307,12 @@ WordyClouds.loadTwitterQuery = function(){
 			console.log(text);
 			text+=entry.text + '\n';
 		})	
-		WordyClouds.loadFromText(text);
+		TagCloud.loadFromText(text);
 		})	
 	
 }
 
-WordyClouds.loadFromFeed = function(){
+TagCloud.loadFromFeed = function(){
 	var url = document.getElementById('rss').value;
 	console.log('rss url entered: ' + url);
 	var numEntries = document.getElementById('rsscount').value;
@@ -333,7 +334,7 @@ WordyClouds.loadFromFeed = function(){
 			   	text += stripHTML(entry.content) + '\n';
 			})			
 			
-			WordyClouds.loadFromText(text);	
+			TagCloud.loadFromText(text);	
 		})
 		}
 	})
@@ -342,24 +343,45 @@ WordyClouds.loadFromFeed = function(){
 }
 
 
-WordyClouds.runBookmarklet = function(){
-    var text = document.getElementById('textBox').value;
-    this.loadFromText(text)
+TagCloud.runBookmarklet = function(target){
+	target = target || 'textBox';
+	console.log("Running bookmarklet with target: " + target);
+	var text = '';
+	if(target == 'textBox'){
+		text = document.getElementById('textBox').value;	
+	    this.loadFromText(text)
+	}
+	else if(target == 'twitter_user' || target == 'loadTweets'){
+		TagCloud.loadTweets();
+	}
+	else if(target == 'twitter_query' || target == 'loadTwitterQuery'){
+		TagCloud.loadTwitterQuery();
+	}
+	else if (target == 'rss' || target == 'loadRSS'){
+		TagCloud.loadFromFeed();
+	}
+
 }
 
-WordyClouds.processClick = function(x, y){
+TagCloud.processClick = function(x, y){
 	console.log("Before adjusting, user clicked at x="+x+", and y="+y);
-	x = x - 50;
-	y = y - 50;
+	y = y - 363;
 	console.log("User clicked at x="+x+", and y="+y);
 	for (var word in word_dictionary){
 		var wordObj = word_dictionary[word];
 		word_dictionary[word].color = 'rgba(80, 80, 80, 0.5)';
+		
 	}
+	//console.log("well="+word_dictionary['well'].text + ", from x=" + word_dictionary['well'].x + " to x="+(word_dictionary['well'].x + word_dictionary['well'].width) + ", from y=" + (word_dictionary['well'].y) + " to y=" + (word_dictionary['well'].y + word_dictionary['well'].height));
+//	console.log("well.x=" + word_dictionary['well'].x);
+//	console.log("well.y=" + word_dictionary['well'].y);
+//	console.log("well.width=" + word_dictionary['well'].width);
+//	console.log("well.height=" + word_dictionary['well'].height);
 	for (var word in word_dictionary){
 		var wordObj = word_dictionary[word];
+		//console.log("Word="+wordObj.text+", from x="+wordObj.x+" to x="+(wordObj.x + wordObj.width)+", from y="+(wordObj.y - wordObj.height)+" to y="+wordObj.y);
 		if (x >= wordObj.x && x <= (wordObj.x + wordObj.width) && y <= wordObj.y && y >= (wordObj.y - wordObj.height)){
-			console.log("Word="+wordObj.text+", from x="+wordObj.x+" to x="+(wordObj.x + wordObj.width)+", from y="+(wordObj.y - wordObj.height)+" to y="+wordObj.y);
+			//console.log("Word="+wordObj.text+", from x="+wordObj.x+" to x="+(wordObj.x + wordObj.width)+", from y="+(wordObj.y - wordObj.height)+" to y="+wordObj.y);
 			word_dictionary[wordObj.text].color = 'rgba(255, 63, 47, 1)';
 			var assocList = wordObj.assoc;
 			var list = Object.keys(assocList);
