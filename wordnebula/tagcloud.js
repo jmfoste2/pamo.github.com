@@ -365,17 +365,23 @@ TagCloud.runBookmarklet = function(target){
 
 TagCloud.processClick = function(x, y){
 	console.log("Before adjusting, user clicked at x="+x+", and y="+y);
-	x = x - 50;
-	y = y - 50;
+	y = y - 363;
 	console.log("User clicked at x="+x+", and y="+y);
 	for (var word in word_dictionary){
 		var wordObj = word_dictionary[word];
 		word_dictionary[word].color = 'rgba(80, 80, 80, 0.5)';
+		
 	}
+	//console.log("well="+word_dictionary['well'].text + ", from x=" + word_dictionary['well'].x + " to x="+(word_dictionary['well'].x + word_dictionary['well'].width) + ", from y=" + (word_dictionary['well'].y) + " to y=" + (word_dictionary['well'].y + word_dictionary['well'].height));
+//	console.log("well.x=" + word_dictionary['well'].x);
+//	console.log("well.y=" + word_dictionary['well'].y);
+//	console.log("well.width=" + word_dictionary['well'].width);
+//	console.log("well.height=" + word_dictionary['well'].height);
 	for (var word in word_dictionary){
 		var wordObj = word_dictionary[word];
+		//console.log("Word="+wordObj.text+", from x="+wordObj.x+" to x="+(wordObj.x + wordObj.width)+", from y="+(wordObj.y - wordObj.height)+" to y="+wordObj.y);
 		if (x >= wordObj.x && x <= (wordObj.x + wordObj.width) && y <= wordObj.y && y >= (wordObj.y - wordObj.height)){
-			console.log("Word="+wordObj.text+", from x="+wordObj.x+" to x="+(wordObj.x + wordObj.width)+", from y="+(wordObj.y - wordObj.height)+" to y="+wordObj.y);
+			//console.log("Word="+wordObj.text+", from x="+wordObj.x+" to x="+(wordObj.x + wordObj.width)+", from y="+(wordObj.y - wordObj.height)+" to y="+wordObj.y);
 			word_dictionary[wordObj.text].color = 'rgba(255, 63, 47, 1)';
 			var assocList = wordObj.assoc;
 			var list = Object.keys(assocList);
