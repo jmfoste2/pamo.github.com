@@ -46,8 +46,8 @@ label {
 
 <script src="sampletext.js"></script>
 <script src="tagcloud.js"></script>
+<script src="canvas2image.js"></script>
 <script type="text/javascript">
-
 window.addEventListener('load', eventWindowLoaded, false);
 	var lastTarget, canvas, container, context = {};
 
@@ -128,7 +128,6 @@ function canvasApp() {
 	formElement = document.getElementById("loadTwitterQuery")
 	formElement.addEventListener('click', reDrawCanvas, false);	
 	
-	
 	canvas.addEventListener("mousedown", changeColor, false );
 	
 	drawScreen();
@@ -185,6 +184,18 @@ function canvasApp() {
 	function changeColor(e) {
 		TagCloud.processClick(e.pageX, e.pageY);
 		
+	}
+	
+	function saveAsJPEG() {
+		Canvas2Image.saveAsJPEG(canvas);
+	}
+	
+	function saveAsPNG() {
+		Canvas2Image.saveAsPNG(canvas);
+	}
+	
+	function saveAsBMP() {
+		Canvas2Image.saveAsBMP(canvas);
 	}
 
 
@@ -294,6 +305,12 @@ Change BG to <a href="#" onClick="changeColorScheme('#000099')">Blue</a> or <a h
 </canvas>
 </div>
 
+<div>
+	<br>
+	<input type="button" value="Save as JPEG" onclick=saveAsJPEG()>
+	<input type="button" value="Save as PNG" onclick=saveAsPNG()>
+	<input type="button" value="Save as BMP" onclick=saveAsBMP()>
+</div>
 </body>
 </html>
 
