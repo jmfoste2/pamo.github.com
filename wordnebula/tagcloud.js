@@ -59,6 +59,7 @@ ColorPalettes.scheme1 =
 ]
 
 var word_dictionary = {}
+var max_freq = 0;
 /* ============== Util Functions ========================== */
 function Word(word) {
     this.text = word;
@@ -69,6 +70,7 @@ function Word(word) {
     this.height = 1;
 	this.freq = 1;
 	this.assoc = {};
+	this.inc = true;
 }
 
 function getText(elm, excludeTags){
@@ -118,6 +120,11 @@ function createWords(text, commonWords){
 		}
 	}
 	console.log(word_dict)
+	for (word in word_dict){
+		if(word_dict[word].freq > max_freq){
+			max_freq = word_dict[word].freq
+		}
+	}
 	for (var i=0; i+1<words.length; i++){
 		if (words[i + 1] != words[i]) {
 			if (words[i + 1] in word_dict[words[i]].assoc) // checks if the next word is already in the dictionary of associated words.
@@ -134,10 +141,10 @@ function createWords(text, commonWords){
 	return word_dict
 }
 
-function calculateSizeScale(word_dictionary){
+function calculateSizeScale(){
     var max = 0
     keys(word_dictionary).forEach(function(word){
-        if (word_dictionary[word].freq > max)
+        if (word_dictionary[word].inc == true && word_dictionary[word].freq > max)
             max = word_dictionary[word].freq
     })
     return 110 / max
@@ -175,10 +182,13 @@ Layouts.printWords = function PrintWordsLayout(canvas, colors, fontName){
         var totalRelArea = 0
         var wordCount = 0
         for (var word in word_dictionary){
-            var fontSize = word_dictionary[word].freq
-            var wordArea = (fontSize * 1.5 * (word.length * fontSize * 0.8))
-            totalRelArea += wordArea
-            wordCount++
+			var include = word_dictionary[word].inc
+			if (include == true) {
+				var fontSize = word_dictionary[word].freq
+				var wordArea = (fontSize * 1.5 * (word.length * fontSize * 0.8))
+				totalRelArea += wordArea
+				wordCount++
+			}
         }
         var area = (width - 2 * padding) * (height - 2 * padding)
         return Math.sqrt(area / totalRelArea)
@@ -204,59 +214,63 @@ Layouts.printWords = function PrintWordsLayout(canvas, colors, fontName){
 	/** print word **/
 	// for each word	
 	words.forEach(function(word){
-		var textHeight = word_dictionary[word].freq * sizeScale
-		if (textHeight > maxTextHght)
-			maxTextHght = textHeight;	
-		if (textHeight < 5) return 
-		//if (textHeight > 50) avoid_y+=textHeight/4;
-        context.font = textHeight + 'px ' + fontName
-        var textWidth = context.measureText(word).width
-		//console.log('avoid_x is now: ' + avoid_x)
-        //console.log('Word: ' + word  + ' height: ' + textHeight + ' width: ' + textWidth)
-	
-		// check if distance between last x and canvas width is less than width of word
-		if( (avoid_x - textWidth) > 20){
-			var x = avoid_x - textWidth;
-			avoid_x = x;
-			var y = avoid_y;
-			//console.log('avoid: ' + x + ', ' + y + ', avoid_x=' + avoid_x)
-			//var c = Math.floor(Math.random() * colors.length)
-        	//var c = word_dictionary[word].color;
-        	//context.fillStyle = 'rgba(' + c.join(',') + ', 1)'
-			context.fillStyle = word_dictionary[word].color;
-        	context.font = textHeight + 'px ' + fontName
-	        //console.log('fillText: ' + [word, x, y].join(', '))
-			word_dictionary[word].x = x;
-			word_dictionary[word].y = y;
-			word_dictionary[word].height = textHeight;
-			word_dictionary[word].width = textWidth;
-       
-        	context.fillText(word, x, y)
-		}  else if((avoid_x - textWidth) < 20){
-			avoid_x = canvas.width - textWidth;
-			var x = avoid_x;
-			avoid_y -= maxTextHght+pad;
-			var y = avoid_y;
-			//console.log('avoid: ' + x + ', ' + y + ', avoid_x=' + avoid_x)	
-			//console.log('avoid: ' + x + ', ' + y)			
-			//var c = Math.floor(Math.random() * colors.length)
-        	//var c = colors[c]
-        	//context.fillStyle = 'rgba(' + c.join(',') + ', 1)'
-			context.fillStyle = word_dictionary[word].color;
-        	context.font = textHeight + 'px ' + fontName
-	        //console.log('fillText: ' + [word, x, y].join(', '))
-			word_dictionary[word].x = x;
-			word_dictionary[word].y = y;
-       		word_dictionary[word].height = textHeight;
-			word_dictionary[word].width = textWidth;
-        	context.fillText(word, x, y)
-			maxTextHght = 0;
+		if (word_dictionary[word].inc == true) {
+			var textHeight = word_dictionary[word].freq * sizeScale
+			if (textHeight > maxTextHght) 
+				maxTextHght = textHeight;
+			if (textHeight < 5) return 
+			//if (textHeight > 50) avoid_y+=textHeight/4;
+			context.font = textHeight + 'px ' + fontName
+			var textWidth = context.measureText(word).width
+			//console.log('avoid_x is now: ' + avoid_x)
+			//console.log('Word: ' + word  + ' height: ' + textHeight + ' width: ' + textWidth)
+			
+			// check if distance between last x and canvas width is less than width of word
+			if ((avoid_x - textWidth) > 20) {
+				var x = avoid_x - textWidth;
+				avoid_x = x;
+				var y = avoid_y;
+				//console.log('avoid: ' + x + ', ' + y + ', avoid_x=' + avoid_x)
+				//var c = Math.floor(Math.random() * colors.length)
+				//var c = word_dictionary[word].color;
+				//context.fillStyle = 'rgba(' + c.join(',') + ', 1)'
+				context.fillStyle = word_dictionary[word].color;
+				context.font = textHeight + 'px ' + fontName
+				//console.log('fillText: ' + [word, x, y].join(', '))
+				word_dictionary[word].x = x;
+				word_dictionary[word].y = y;
+				word_dictionary[word].height = textHeight;
+				word_dictionary[word].width = textWidth;
+				
+				context.fillText(word, x, y)
+			}
+			else 
+				if ((avoid_x - textWidth) < 20) {
+					avoid_x = canvas.width - textWidth;
+					var x = avoid_x;
+					avoid_y -= maxTextHght + pad;
+					var y = avoid_y;
+					//console.log('avoid: ' + x + ', ' + y + ', avoid_x=' + avoid_x)	
+					//console.log('avoid: ' + x + ', ' + y)			
+					//var c = Math.floor(Math.random() * colors.length)
+					//var c = colors[c]
+					//context.fillStyle = 'rgba(' + c.join(',') + ', 1)'
+					context.fillStyle = word_dictionary[word].color;
+					context.font = textHeight + 'px ' + fontName
+					//console.log('fillText: ' + [word, x, y].join(', '))
+					word_dictionary[word].x = x;
+					word_dictionary[word].y = y;
+					word_dictionary[word].height = textHeight;
+					word_dictionary[word].width = textWidth;
+					context.fillText(word, x, y)
+					maxTextHght = 0;
+				}
+			
+			// track right-most x, right-most y
+			//avoid_x = context.canvas.width * Math.random();
+			//avoid_y = context.canvas.height * Math.random();
+			avoid_x -= pad;
 		}
-		
-		// track right-most x, right-most y
-		//avoid_x = context.canvas.width * Math.random();
-		//avoid_y = context.canvas.height * Math.random();
-		avoid_x -= pad;
 	 })
 }
 
@@ -363,6 +377,37 @@ TagCloud.runBookmarklet = function(target){
 
 }
 
+TagCloud.adjustFreqRange = function(num){
+	num = num / 100;
+	for (var word in word_dictionary){
+		var wordFreq = word_dictionary[word].freq;
+		var halfMax = max_freq/2;
+		var filter = num * max_freq;
+		if (num > .5){
+			if (wordFreq > halfMax){
+				if (wordFreq > filter) {
+					console.log("In wordFreq > halfMax, Filtered out=" + word + ", with halfMax=" + halfMax + " and filter=" + filter +" and word has=" + wordFreq);
+					word_dictionary[word].inc = false;
+				} else {
+					word_dictionary[word].inc = true;
+				}
+			}
+		} else if (num <= .5) {
+			if (wordFreq <= halfMax){
+				if (wordFreq <= filter) {
+					console.log("In wordFreq > halfMax, Filtered out=" + word + ", with halfMax=" + halfMax + " and filter=" + filter +" and word has=" + wordFreq);
+					word_dictionary[word].inc = false;
+				} else {
+					word_dictionary[word].inc = true;
+				}				
+			}
+		}
+	}
+
+    this.loadFromWordFreq()
+	
+}
+
 TagCloud.processClick = function(x, y){
 	console.log("Before adjusting, user clicked at x="+x+", and y="+y);
 	y = y - 363;
@@ -401,14 +446,6 @@ TagCloud.processClick = function(x, y){
 		} 
 		
 	}
-    var layout = Layouts.printWords
-    var palate = ColorPalettes.scheme1
-    var fontName = getComputedStyle(document.body)['font-family']
-    var canvas = document.getElementById('display')
-
-    document.body.style.padding = '0'
-    document.body.style.margin = '0'
-    document.body.style.overflow = 'auto'
-    layout(canvas, palate, fontName)
+    this.loadFromWordFreq()
 	
 }

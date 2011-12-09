@@ -104,12 +104,6 @@ function canvasApp() {
 	formElement = document.getElementById("canvasHeight")
 	formElement.addEventListener('change', canvasHeightChanged, false);
 	
-	formElement = document.getElementById("wordMax")
-	formElement.addEventListener('change', adjustWordMax, false);	
-	
-	formElement = document.getElementById("wordMin")
-	formElement.addEventListener('change', adjustWordMin, false);
-		
 	formElement = document.getElementById("rss")
 	formElement.addEventListener('change', reDrawCanvas, false);
 	
@@ -170,18 +164,6 @@ function canvasApp() {
 		reDrawCanvas(lastTarget);
 	}
 	
-	function adjustWordMax(e) {
-		var target =  e.target;
-		var max =  target.value;
-		TagCloud.adjustFreqRange(max);
-	}
-
-	function adjustWordMin(e) {
-		var target =  e.target;
-		var min = target.value;
-		TagCloud.adjustFreqRange(min);
-	}
-
 	function changeColor(e) {
 		TagCloud.processClick(e.pageX, e.pageY);
 		
@@ -268,22 +250,6 @@ Change BG to <a href="#" onClick="changeColorScheme('#000099')">Blue</a> or <a h
 	<li><a href="#" onClick="sampleText('di')" />US Declaration of Independence</a></li>
 	<li><a href="#" onClick="sampleText('lp')" />Text from The Little Prince</a></li>
 	<li><a href="#" onClick="sampleText('fb')" />Comments from Gap's Facebook Wall</a></li>
-	</div>
-	<div><label>Word size max:</label>
-	<input 	type="range" 
-			id="wordMax"
-			min="51"
-			max="100"
-			step="1"
-			value="100"/>
-	</div>
-	<div><label>Word size min:</label>
-	<input 	type="range" 
-			id="wordMin"
-       		min="0"
-       		max="50"
-       		step="1"
-		    value="0"/>
 	</div>
 </div>	
 </div>
